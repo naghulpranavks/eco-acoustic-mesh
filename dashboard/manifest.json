@@ -1,0 +1,11 @@
+{
+  "name": "EcoMesh Ranger Dashboard",
+  "short_name": "EcoMesh",
+  "description": "Anti-poaching sentinel network dashboard",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f1c",
+  "theme_color": "#0a0f1c",
+  "orientation": "portrait",
+  "icons": []
+}

@@ -1,0 +1,29 @@
+# ============================================
+# Project Eco-Acoustic Mesh — Dependencies
+# ============================================
+
+# --- Core Audio ---
+numpy>=1.24.0
+sounddevice>=0.4.6
+soundfile>=0.12.0
+
+# --- AI / Inference ---
+ollama>=0.4.0
+
+# --- Configuration ---
+PyYAML>=6.0
+
+# --- Hardware Comms ---
+pyserial>=3.5
+
+# --- Gateway Server ---
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+aiosqlite>=0.19.0
+
+# --- System Monitoring ---
+psutil>=5.9.0
+
+# --- Development / Testing ---
+pytest>=7.4.0
+httpx>=0.25.0

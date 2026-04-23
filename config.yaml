@@ -1,0 +1,46 @@
+# ============================================
+# Eco-Acoustic Mesh — Central Configuration
+# ============================================
+
+sentinel:
+  node_id: 1
+  simulation_mode: true   # Set false on real Pi hardware
+
+audio:
+  sample_rate: 16000       # Gemma E2B requires 16kHz mono
+  channels: 1
+  buffer_duration_sec: 5   # Rolling window size
+  chunk_duration_sec: 0.5  # Mic read chunk size
+  silence_threshold_db: -40.0
+  device_index: null       # null = system default mic
+
+inference:
+  model: "gemma4:e2b"
+  confidence_threshold: 0.70
+  max_inference_time_sec: 15
+  ollama_host: "http://localhost:11434"
+  use_minimal_prompt: false  # Use shorter prompt on very constrained devices
+
+lora:
+  serial_port: "/dev/ttyS0"   # Linux; use "COM3" on Windows
+  baud_rate: 9600
+  fport: 2
+  retry_count: 3
+  retry_delay_sec: 2
+
+power:
+  thermal_limit_c: 75
+  sleep_interval_sec: 2       # Seconds between inference cycles
+  heartbeat_interval_sec: 300  # 5 min heartbeat
+  adaptive_sleep: true         # Increase sleep when no threats detected
+
+gps:
+  use_gpsd: false
+  mock_latitude: -1.948975     # Masai Mara, Kenya (example)
+  mock_longitude: 34.786740
+
+logging:
+  level: "INFO"
+  file: "sentinel.log"
+  max_bytes: 5242880   # 5 MB
+  backup_count: 3

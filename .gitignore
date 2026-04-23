@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs & DB
+*.log
+*.db
+alerts.db
+sentinel.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Model files (too large for git)
+*.gguf
+*.bin
+*.safetensors
+eco_mesh_model/
+eco_mesh_gguf/
+eco_mesh_checkpoints/
+
+# Colab artifacts
+ESC-50/
+
+# Gemini
+.gemini/
