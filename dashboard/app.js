@@ -214,10 +214,15 @@
 
     function switchToMap() {
         document.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.remove("active"); });
-        document.querySelectorAll(".tab-panel").forEach(function (p) { p.classList.remove("active"); });
+        document.querySelectorAll(".tab-panel").forEach(function (p) {
+            p.classList.remove("active");
+            p.style.display = "none";
+        });
         document.querySelector('[data-tab="map"]').classList.add("active");
-        document.getElementById("panel-map").classList.add("active");
-        setTimeout(function () { map.invalidateSize(); }, 100);
+        var mapPanel = document.getElementById("panel-map");
+        mapPanel.style.display = "flex";
+        mapPanel.classList.add("active");
+        setTimeout(function () { map.invalidateSize(); }, 150);
     }
 
     // =====================
