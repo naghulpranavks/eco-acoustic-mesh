@@ -118,17 +118,12 @@
             btn.addEventListener("click", function () {
                 var tab = btn.dataset.tab;
                 document.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.remove("active"); });
-                document.querySelectorAll(".tab-panel").forEach(function (p) {
-                    p.classList.remove("active");
-                    p.style.display = "none";
-                });
+                document.querySelectorAll(".tab-panel").forEach(function (p) { p.classList.remove("active"); });
                 btn.classList.add("active");
-                var panel = document.getElementById("panel-" + tab);
-                panel.style.display = "flex";
-                panel.classList.add("active");
+                document.getElementById("panel-" + tab).classList.add("active");
 
                 if (tab === "map" && map) {
-                    setTimeout(function () { map.invalidateSize(); }, 150);
+                    setTimeout(function () { map.invalidateSize(); }, 100);
                 }
                 // Re-render nodes when switching to that tab
                 if (tab === "nodes") {
@@ -215,14 +210,9 @@
 
     function switchToMap() {
         document.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.remove("active"); });
-        document.querySelectorAll(".tab-panel").forEach(function (p) {
-            p.classList.remove("active");
-            p.style.display = "none";
-        });
+        document.querySelectorAll(".tab-panel").forEach(function (p) { p.classList.remove("active"); });
         document.querySelector('[data-tab="map"]').classList.add("active");
-        var mapPanel = document.getElementById("panel-map");
-        mapPanel.style.display = "flex";
-        mapPanel.classList.add("active");
+        document.getElementById("panel-map").classList.add("active");
         setTimeout(function () { map.invalidateSize(); }, 150);
     }
 
@@ -416,18 +406,12 @@
     //  BOOTSTRAP
     // =====================
     function init() {
-        // Hide non-active panels explicitly on init
-        document.querySelectorAll(".tab-panel").forEach(function (p) {
-            if (!p.classList.contains("active")) {
-                p.style.display = "none";
-            }
-        });
         initMap();
         initTabs();
         // Force map to recalculate size after layout is ready
         setTimeout(function () {
             if (map) map.invalidateSize();
-        }, 300);
+        }, 500);
         // Try SSE first, fall back to polling
         connectSSE();
         // Initial fetch

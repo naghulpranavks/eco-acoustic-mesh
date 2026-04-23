@@ -197,13 +197,12 @@ body {
 /* ---- Content ---- */
 #content {
     flex: 1;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
     min-height: 0;
 }
 
 .tab-panel {
-    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -211,11 +210,15 @@ body {
     bottom: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    z-index: 0;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .tab-panel.active {
-    display: flex;
-    flex-direction: column;
+    z-index: 1;
+    visibility: visible;
 }
 
 /* ---- Map ---- */
