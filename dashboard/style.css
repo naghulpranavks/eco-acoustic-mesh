@@ -200,17 +200,20 @@ body {
     flex: 1;
     overflow: hidden;
     position: relative;
+    min-height: 0;
 }
 
 .tab-panel {
     display: none;
     height: 100%;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tab-panel.active {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 /* ---- Map ---- */
