@@ -23,6 +23,7 @@
         filter: "all",
         mapReady: false,
         connected: false,
+        initialLoad: true,  // suppress toasts on first fetch
     };
 
     // --- Threat metadata ---
@@ -308,10 +309,11 @@
                 if (data.alerts && data.alerts.length > state.alerts.length) {
                     data.alerts.forEach(function (a) {
                         if (!state.alerts.find(function (e) { return e.timestamp === a.timestamp && e.node?.id === a.node?.id; })) {
-                            handleNewAlert(a);
+                            handleNewAlert(a, state.initialLoad);
                         }
                     });
                 }
+                state.initialLoad = false;
                 setConnectionStatus("connected", "Live");
             })
             .catch(function () {
@@ -319,7 +321,7 @@
             });
     }
 
-    function handleNewAlert(alert) {
+    function handleNewAlert(alert, silent) {
         state.alerts.unshift(alert);
         if (state.alerts.length > 200) state.alerts.pop();
 
@@ -336,9 +338,9 @@
         // Add marker
         addMapMarker(alert);
 
-        // Update badge
+        // Update badge + toast (only for real-time alerts, not on page load)
         var isThreat = !["AMBIENT", "UNKNOWN"].includes(alert.threat?.class) && alert.msg_type !== "heartbeat";
-        if (isThreat) {
+        if (isThreat && !silent) {
             var badge = document.getElementById("alert-badge");
             var count = parseInt(badge.textContent || "0") + 1;
             badge.textContent = count;
