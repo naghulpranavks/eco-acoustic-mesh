@@ -277,7 +277,13 @@
             source.onmessage = function (event) {
                 try {
                     var alert = JSON.parse(event.data);
-                    handleNewAlert(alert);
+                    // Skip if we already have this alert
+                    var isDuplicate = state.alerts.find(function (e) {
+                        return e.timestamp === alert.timestamp && e.node?.id === alert.node?.id;
+                    });
+                    if (!isDuplicate) {
+                        handleNewAlert(alert, false);
+                    }
                 } catch (e) {
                     console.warn("SSE parse error:", e);
                 }
@@ -356,18 +362,23 @@
     //  TOAST NOTIFICATIONS
     // =====================
     function showToast(alert) {
+        var container = document.getElementById("toast-container");
+        // Limit to 3 visible toasts max
+        while (container.children.length >= 3) {
+            container.removeChild(container.firstChild);
+        }
         var meta = THREATS[alert.threat?.class] || THREATS.UNKNOWN;
         var toast = document.createElement("div");
         toast.className = "toast threat";
         toast.innerHTML = meta.icon + " " + meta.label + " detected at Node #" + (alert.node?.id || "?") + " (" + (alert.threat?.confidence || 0) + "% conf)";
 
-        document.getElementById("toast-container").appendChild(toast);
+        container.appendChild(toast);
         setTimeout(function () {
             toast.style.opacity = "0";
             toast.style.transform = "translateY(-20px)";
             toast.style.transition = "all 0.3s ease";
             setTimeout(function () { toast.remove(); }, 300);
-        }, 5000);
+        }, 3000);
     }
 
     // =====================
