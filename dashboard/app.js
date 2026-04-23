@@ -406,6 +406,10 @@
         });
         initMap();
         initTabs();
+        // Force map to recalculate size after layout is ready
+        setTimeout(function () {
+            if (map) map.invalidateSize();
+        }, 300);
         // Try SSE first, fall back to polling
         connectSSE();
         // Initial fetch
