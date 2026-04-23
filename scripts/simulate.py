@@ -170,9 +170,14 @@ def run_simulation(gateway_url=None, cycles=20):
                 f"({decoded.latitude:.4f}, {decoded.longitude:.4f})"
             )
 
-            # POST to gateway if URL provided
+            # POST threat to gateway
             if gateway_url:
                 _post_to_gateway(gateway_url, payload, confidence, scenario)
+
+        else:
+            # POST heartbeat / ambient status to gateway
+            if gateway_url:
+                _post_heartbeat(gateway_url)
 
         time.sleep(0.5)
 
@@ -182,7 +187,7 @@ def run_simulation(gateway_url=None, cycles=20):
 
 
 def _post_to_gateway(url, payload_bytes, confidence, threat_class):
-    """POST a simulated alert to the gateway server."""
+    """POST a simulated threat alert to the gateway server."""
     try:
         import httpx
         alert = {
@@ -211,6 +216,37 @@ def _post_to_gateway(url, payload_bytes, confidence, threat_class):
         logger.info(f"  → Gateway response: {resp.status_code}")
     except Exception as e:
         logger.warning(f"  → Gateway POST failed: {e}")
+
+
+def _post_heartbeat(url):
+    """POST a heartbeat (ambient/quiet) status to the gateway."""
+    try:
+        import httpx
+        heartbeat = {
+            "msg_type": "heartbeat",
+            "threat": {
+                "class": "AMBIENT",
+                "code": 0,
+                "confidence": 0,
+            },
+            "location": {
+                "latitude": -1.948975,
+                "longitude": 34.786740,
+                "gps_valid": True,
+            },
+            "timestamp": int(time.time()),
+            "timestamp_iso": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "node": {
+                "id": 1,
+                "battery_pct": random.randint(60, 100),
+                "cpu_temp_c": random.randint(40, 55),
+                "audio_db": random.randint(5, 20),
+            },
+            "flags": {"gps_valid": True, "solar_charging": True, "buffer_overflow": False},
+        }
+        resp = httpx.post(f"{url}/api/simulate", json=heartbeat, timeout=5)
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":
