@@ -29,10 +29,10 @@
     // --- Threat metadata ---
     const THREATS = {
         CHAINSAW: { icon: "\u{1FAB5}", label: "Chainsaw", css: "chainsaw", color: "#ef4444" },
-        GUNSHOT:  { icon: "\u{1F4A5}", label: "Gunshot",  css: "gunshot",  color: "#dc2626" },
-        VEHICLE:  { icon: "\u{1F69A}", label: "Vehicle",  css: "vehicle",  color: "#f59e0b" },
-        AMBIENT:  { icon: "\u{1F33F}", label: "Ambient",  css: "ambient",  color: "#22c55e" },
-        UNKNOWN:  { icon: "\u{2753}", label: "Unknown",  css: "ambient",  color: "#6b7280" },
+        GUNSHOT: { icon: "\u{1F4A5}", label: "Gunshot", css: "gunshot", color: "#dc2626" },
+        VEHICLE: { icon: "\u{1F69A}", label: "Vehicle", css: "vehicle", color: "#f59e0b" },
+        AMBIENT: { icon: "\u{1F33F}", label: "Ambient", css: "ambient", color: "#22c55e" },
+        UNKNOWN: { icon: "\u{2753}", label: "Unknown", css: "ambient", color: "#6b7280" },
     };
 
     // =====================
@@ -102,8 +102,8 @@
             '<div class="detail-row"><span class="detail-label">Node</span><span class="detail-value">#' + (alert.node?.id || "?") + '</span></div>' +
             '<div class="detail-row"><span class="detail-label">Time</span><span class="detail-value">' + formatTime(ts) + '</span></div>' +
             '<div class="detail-row"><span class="detail-label">Location</span><span class="detail-value">' +
-                (alert.location?.latitude?.toFixed(5) || "?") + ', ' +
-                (alert.location?.longitude?.toFixed(5) || "?") +
+            (alert.location?.latitude?.toFixed(5) || "?") + ', ' +
+            (alert.location?.longitude?.toFixed(5) || "?") +
             '</span></div>' +
             '<div class="detail-row"><span class="detail-label">Battery</span><span class="detail-value">' + (alert.node?.battery_pct || "?") + '%</span></div>';
 
@@ -188,13 +188,13 @@
         card.innerHTML =
             '<div class="alert-icon-wrap ' + meta.css + '">' + meta.icon + '</div>' +
             '<div class="alert-content">' +
-                '<div class="alert-title">' + meta.label + (isThreat ? " Detected" : "") + '</div>' +
-                '<div class="alert-meta">' +
-                    '<span>Node #' + (alert.node?.id || "?") + '</span>' +
-                    '<span>' + formatTime(ts) + '</span>' +
-                    (isThreat ? '<span>' + conf + '% conf</span>' : '') +
-                '</div>' +
-                (isThreat ? '<div class="confidence-bar"><div class="confidence-fill ' + confLevel + '" style="width:' + conf + '%"></div></div>' : '') +
+            '<div class="alert-title">' + meta.label + (isThreat ? " Detected" : "") + '</div>' +
+            '<div class="alert-meta">' +
+            '<span>Node #' + (alert.node?.id || "?") + '</span>' +
+            '<span>' + formatTime(ts) + '</span>' +
+            (isThreat ? '<span>' + conf + '% conf</span>' : '') +
+            '</div>' +
+            (isThreat ? '<div class="confidence-bar"><div class="confidence-fill ' + confLevel + '" style="width:' + conf + '%"></div></div>' : '') +
             '</div>';
 
         card.addEventListener("click", function () {
@@ -238,15 +238,15 @@
             card.className = "node-card";
             card.innerHTML =
                 '<div class="node-header">' +
-                    '<span class="node-name">Sentinel #' + id + '</span>' +
-                    '<span class="node-status-badge ' + (online ? "online" : "offline") + '">' +
-                        (online ? "Online" : "Offline") +
-                    '</span>' +
+                '<span class="node-name">Sentinel #' + id + '</span>' +
+                '<span class="node-status-badge ' + (online ? "online" : "offline") + '">' +
+                (online ? "Online" : "Offline") +
+                '</span>' +
                 '</div>' +
                 '<div class="node-stats">' +
-                    '<div class="node-stat"><div class="node-stat-value" style="color:' + batteryColor(n.battery_pct) + '">' + (n.battery_pct || "?") + '%</div><div class="node-stat-label">Battery</div></div>' +
-                    '<div class="node-stat"><div class="node-stat-value">' + (n.cpu_temp_c || "?") + '&deg;C</div><div class="node-stat-label">Temp</div></div>' +
-                    '<div class="node-stat"><div class="node-stat-value">' + formatTimeAgo(age) + '</div><div class="node-stat-label">Last Seen</div></div>' +
+                '<div class="node-stat"><div class="node-stat-value" style="color:' + batteryColor(n.battery_pct) + '">' + (n.battery_pct || "?") + '%</div><div class="node-stat-label">Battery</div></div>' +
+                '<div class="node-stat"><div class="node-stat-value">' + (n.cpu_temp_c || "?") + '&deg;C</div><div class="node-stat-label">Temp</div></div>' +
+                '<div class="node-stat"><div class="node-stat-value">' + formatTimeAgo(age) + '</div><div class="node-stat-label">Last Seen</div></div>' +
                 '</div>';
             grid.appendChild(card);
         });
